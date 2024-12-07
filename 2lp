@@ -1,0 +1,47 @@
+class Student:
+    def __init__(self, name):
+        self.name = name
+        self.knowledge = 0  # Уровень знаний
+        self.tiredness = 0  # Уровень усталости
+
+    def study(self):
+        self.knowledge += 10
+        self.tiredness += 5
+        print(f"{self.name} учился. Знания: {self.knowledge}, Усталость: {self.tiredness}")
+
+    def rest(self):
+        self.tiredness = max(0, self.tiredness - 10)
+        print(f"{self.name} отдохнул. Усталость: {self.tiredness}")
+
+    def __str__(self):
+        return f"{self.name} - Знания: {self.knowledge}, Усталость: {self.tiredness}"
+
+class Teacher:
+    def __init__(self, name, students):
+        self.name = name
+        self.students = students  # Список учеников
+
+    def teach(self):
+        print(f"{self.name} проводит урок.")
+        for student in self.students:
+            student.study()
+
+    def give_feedback(self):
+        for student in self.students:
+            if student.knowledge < 20:
+                print(f"{self.name}: {student.name}, тебе нужно больше стараться!")
+            else:
+                print(f"{self.name}: {student.name}, ты отлично справляешься!")
+
+    def __str__(self):
+        return f"Учитель: {self.name}, Студенты: {[str(student) for student in self.students]}"
+
+# Пример симуляции
+students = [Student("Иван"), Student("Мария"), Student("Алина")]
+teacher = Teacher("Сергей Петрович", students)
+
+for _ in range(3):
+    teacher.teach()
+    teacher.give_feedback()
+    for student in students:
+        student.rest()
